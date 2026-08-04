@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>vCard - Personal Portfolio</title>
+  <title>Hardik Khariwal - Personal Portfolio</title>
 
   <!--
     - favicon
@@ -26,11 +26,36 @@
 </head>
 
 <body>
-
+<!-- Glowing Cursor Blur Follower -->
+<div id="cursor-blur"></div>
   <!--
     - #MAIN
   -->
+<!-- Interactive Terminal Command Palette -->
+<div id="cmd-palette" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.75); z-index: 10000; justify-content: center; align-items: flex-start; padding-top: 100px; backdrop-filter: blur(4px);">
+  
+  <div style="background: var(--eerie-black-2, #202022); border: 1px solid var(--orange-yellow-crayola); border-radius: 14px; width: 90%; max-width: 520px; padding: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); overflow: hidden;">
+    
+    <!-- Input Header -->
+    <div style="display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--jet); padding-bottom: 12px;">
+      <ion-icon name="terminal-outline" style="color: var(--orange-yellow-crayola); font-size: 22px; min-width: 22px;"></ion-icon>
+      <input type="text" id="cmd-input" placeholder="Type a command (e.g. 'resume', 'contact', 'github', 'email')..." style="background: transparent; border: none; outline: none; color: white; width: 100%; font-family: monospace; font-size: 14px;" autocomplete="off">
+    </div>
 
+    <!-- Quick Suggestions / Results Area -->
+    <div id="cmd-results" style="margin-top: 14px; max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;">
+      <!-- Populated dynamically via JS -->
+    </div>
+
+    <!-- Footer Instructions -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--jet); margin-top: 14px; padding-top: 10px; font-size: 11px; color: var(--light-gray-70);">
+      <span>Navigation: Type keyword & press enter</span>
+      <span>Press <kbd style="background: var(--jet); padding: 2px 6px; border-radius: 4px; color: var(--white-2); font-family: monospace;">Esc</kbd> to close</span>
+    </div>
+
+  </div>
+
+</div>
   <main>
 
     <!--
@@ -41,14 +66,18 @@
 
       <div class="sidebar-info">
 
-        <figure class="avatar-box">
-          <img src="./assets/images/my-avatar.png" alt="Richard hanrick" width="80">
+        <figure class="avatar-box" style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
+          <img src="assets/images/profile.jpeg" alt="Hardik Khariwal" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
         </figure>
 
         <div class="info-content">
-          <h1 class="name" title="Richard hanrick">Richard hanrick</h1>
+          <h1 class="name" title="Hardik Khariwal">Hardik Khariwal</h1>
 
-          <p class="title">Web developer</p>
+<!-- Option B: Stacked Badges for Better Readability -->
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: center; margin-top: 8px;">
+  <span class="title" style="font-size: 12px; padding: 3px 12px; border-radius: 6px; margin: 0;">AI Engineer Intern @ Raekis.ai</span>
+  <span class="title" style="font-size: 11px; padding: 3px 10px; border-radius: 6px; margin: 0; opacity: 0.85;">Electrical Engineering @ IIT Bombay</span>
+</div>
         </div>
 
         <button class="info_more-btn" data-sidebar-btn>
@@ -65,19 +94,25 @@
 
         <ul class="contacts-list">
 
-          <li class="contact-item">
+<li class="contact-item">
 
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
+  <div class="icon-box">
+    <ion-icon name="mail-outline"></ion-icon>
+  </div>
 
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
+  <div class="contact-info">
+    <p class="contact-title">Email</p>
 
-              <a href="mailto:richard@example.com" class="contact-link">richard@example.com</a>
-            </div>
+    <!-- UPDATE THIS LINE BELOW -->
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <a href="mailto:khariwalhardik@gmail.com" class="contact-link">khariwalhardik@gmail.com</a>
+      <button type="button" onclick="copyToClipboard('khariwalhardik@gmail.com', 'Email copied to clipboard!')" class="tech-badge" style="padding: 2px 6px; font-size: 10px; cursor: pointer; border: none; outline: none;">
+        <ion-icon name="copy-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
 
-          </li>
+</li>
 
           <li class="contact-item">
 
@@ -87,22 +122,14 @@
 
             <div class="contact-info">
               <p class="contact-title">Phone</p>
-
-              <a href="tel:+12133522795" class="contact-link">+1 (213) 352-2795</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Birthday</p>
-
-              <time datetime="1982-06-23">June 23, 1982</time>
+<!-- UPDATE THIS LINE BELOW -->
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <a href="mailto:khariwalhardik@gmail.com" class="contact-link">+91 99502 29120</a>
+      <button type="button" onclick="copyToClipboard('+91 99502 29120', 'Phone number copied to clipboard!')" class="tech-badge" style="padding: 2px 6px; font-size: 10px; cursor: pointer; border: none; outline: none;">
+        <ion-icon name="copy-outline"></ion-icon>
+      </button>
+    </div>
+              <!-- <a href="tel:+919950229120" class="contact-link">+91 99502 29120</a> -->
             </div>
 
           </li>
@@ -116,7 +143,7 @@
             <div class="contact-info">
               <p class="contact-title">Location</p>
 
-              <address>Sacramento, California, USA</address>
+              <address>IIT Bombay, Powai, Mumbai, Maharashtra, India</address>
             </div>
 
           </li>
@@ -128,20 +155,14 @@
         <ul class="social-list">
 
           <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
+            <a href="https://github.com/khariwalhardik" class="social-link" target="_blank" rel="noopener noreferrer">
+              <ion-icon name="logo-github"></ion-icon>
             </a>
           </li>
 
           <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
+            <a href="https://linkedin.com/in/hardikkhariwal" class="social-link" target="_blank" rel="noopener noreferrer">
+              <ion-icon name="logo-linkedin"></ion-icon>
             </a>
           </li>
 
@@ -165,33 +186,47 @@
         - #NAVBAR
       -->
 
-      <nav class="navbar">
+      <<nav class="navbar">
 
-        <ul class="navbar-list">
+  <ul class="navbar-list">
 
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
-          </li>
+    <li class="navbar-item">
+      <button class="navbar-link active" data-nav-link>About</button>
+    </li>
 
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Resume</button>
-          </li>
+    <li class="navbar-item">
+      <button class="navbar-link" data-nav-link>Resume</button>
+    </li>
 
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
-          </li>
+    <li class="navbar-item">
+      <button class="navbar-link" data-nav-link>Portfolio</button>
+    </li>
 
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
-          </li>
+    <li class="navbar-item">
+      <button class="navbar-link" data-nav-link>Interests</button>
+    </li>
 
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Contact</button>
-          </li>
+    <li class="navbar-item">
+      <button class="navbar-link" data-nav-link>Contact</button>
+    </li>
+<!-- Command Palette Badge Trigger -->
+    <li class="navbar-item">
+      <button type="button" id="cmd-trigger-btn" class="tech-badge" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; cursor: pointer; border: 1px solid rgba(255, 219, 112, 0.3); background: var(--onyx); margin-left: 4px; border-radius: 8px;">
+        <span style="color: var(--orange-yellow-crayola); font-weight: bold; font-family: monospace; font-size: 13px;">&gt;_</span>
+        <span style="font-size: 11px; color: var(--white-2); font-family: monospace;"></span>
+      </button>
+    </li>
+    <!-- Ambient Sound Toggle Button -->
+    <li class="navbar-item">
+      <button id="bg-music-btn" class="tech-badge" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; cursor: pointer; border: 1px solid rgba(255, 219, 112, 0.3); background: var(--onyx); margin-left: 5px;">
+        <ion-icon id="bg-music-icon" name="volume-mute-outline" style="font-size: 16px; color: var(--orange-yellow-crayola);"></ion-icon>
+        <span id="bg-music-text" style="font-size: 12px; color: var(--white-2);">Sound: OFF</span>
+      </button>
+    </li>
 
-        </ul>
+  </ul>
 
-      </nav>
+</nav>
 
 
 
@@ -201,7 +236,7 @@
         - #ABOUT
       -->
 
-      <article class="about  active" data-page="about">
+      <article class="about active" data-page="about">
 
         <header>
           <h2 class="h2 article-title">About me</h2>
@@ -209,17 +244,11 @@
 
         <section class="about-text">
           <p>
-            I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media.
-            I enjoy
-            turning complex problems into simple, beautiful and intuitive designs.
+            I am an Electrical Engineering student at IIT Bombay with a minor in Artificial Intelligence and Data Science. I focus on developing advanced machine learning models, full-stack software applications, and deep learning solutions.
           </p>
 
           <p>
-            My job is to build your website so that it is functional and user-friendly but at the same time attractive.
-            Moreover, I
-            add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring
-            across your
-            message and identity in the most creative way. I created web design for many famous brand companies.
+            My work spans across building AI agents, software systems, and computer vision pipelines. I enjoy solving complex engineering problems and delivering reliable, high-performance software.
           </p>
         </section>
 
@@ -230,22 +259,21 @@
 
         <section class="service">
 
-          <h3 class="h3 service-title">What i'm doing</h3>
+          <h3 class="h3 service-title">What I'm doing</h3>
 
           <ul class="service-list">
 
             <li class="service-item">
 
               <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg
-                " alt="design icon" width="40">
+                <img src="./assets/images/icon-dev.svg" alt="Artificial Intelligence icon" width="40">
               </div>
 
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">Web design</h4>
+                <h4 class="h4 service-item-title">Artificial Intelligence & ML</h4>
 
                 <p class="service-item-text">
-                  The most modern and high-quality design made at a professional level.
+                  Developing intelligent AI agents, Large Language Model workflows, NLP, and Retrieval-Augmented Generation (RAG) systems.
                 </p>
               </div>
 
@@ -254,14 +282,14 @@
             <li class="service-item">
 
               <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
+                <img src="./assets/images/icon-app.svg" alt="Computer Vision icon" width="40">
               </div>
 
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">Web development</h4>
+                <h4 class="h4 service-item-title">Computer Vision & Deep Learning</h4>
 
                 <p class="service-item-text">
-                  High-quality development of sites at the professional level.
+                  Building deep learning architectures for object detection, captioning, and image analysis using PyTorch and OpenCV.
                 </p>
               </div>
 
@@ -270,14 +298,14 @@
             <li class="service-item">
 
               <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
+                <img src="./assets/images/icon-design.svg" alt="Full Stack Development icon" width="40">
               </div>
 
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">Mobile apps</h4>
+                <h4 class="h4 service-item-title">Full-Stack Software Engineering</h4>
 
                 <p class="service-item-text">
-                  Professional development of applications for iOS and Android.
+                  Creating scalable web applications, database architectures, and interactive platforms with modern web technology stacks.
                 </p>
               </div>
 
@@ -286,216 +314,17 @@
             <li class="service-item">
 
               <div class="service-icon-box">
-                <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
+                <img src="./assets/images/icon-photo.svg" alt="Embedded Systems icon" width="40">
               </div>
 
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">Photography</h4>
+                <h4 class="h4 service-item-title">Embedded Systems & Hardware</h4>
 
                 <p class="service-item-text">
-                  I make high-quality photos of any category at a professional level.
+                  Designing hardware-integrated electronic systems and sensor-based appliance controls.
                 </p>
               </div>
 
-            </li>
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials
-        -->
-
-        <section class="testimonials">
-
-          <h3 class="h3 testimonials-title">Testimonials</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel lewis</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-2.png" alt="Jessica miller" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica miller</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-3.png" alt="Emily evans" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily evans</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials modal
-        -->
-
-        <div class="modal-container" data-modal-container>
-
-          <div class="overlay" data-overlay></div>
-
-          <section class="testimonials-modal">
-
-            <button class="modal-close-btn" data-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-
-            <div class="modal-img-wrapper">
-              <figure class="modal-avatar-box">
-                <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
-              </figure>
-
-              <img src="./assets/images/icon-quote.svg" alt="quote icon">
-            </div>
-
-            <div class="modal-content">
-
-              <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
-
-              <time datetime="2021-06-14">14 June, 2021</time>
-
-              <div data-modal-text>
-                <p>
-                  Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                  lot of experience
-                  and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                  consectetur adipiscing
-                  elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                </p>
-              </div>
-
-            </div>
-
-          </section>
-
-        </div>
-
-
-        <!--
-          - clients
-        -->
-
-        <section class="clients">
-
-          <h3 class="h3 clients-title">Clients</h3>
-
-          <ul class="clients-list has-scrollbar">
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-1-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-2-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-3-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-4-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-5-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-6-color.png" alt="client logo">
-              </a>
             </li>
 
           </ul>
@@ -514,10 +343,44 @@
 
       <article class="resume" data-page="resume">
 
-        <header>
-          <h2 class="h2 article-title">Resume</h2>
-        </header>
+<header style="margin-bottom: 25px;">
+    <h2 class="h2 article-title">Resume</h2>
 
+    <!-- Download Resume PDF Button placed below the header bar -->
+    <div style="margin-top: 15px;">
+      <a href="./assets/Hardik_Khariwal_Resume.pdf" download="Hardik_Khariwal_Resume.pdf" class="tech-badge" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 10px 18px; font-weight: 600; background: var(--border-gradient-onyx);">
+        <ion-icon name="download-outline" style="font-size: 20px; color: var(--orange-yellow-crayola);"></ion-icon>
+        <span>Download Resume PDF</span>
+      </a>
+    </div>
+  </header>
+<section class="timeline" style="margin-bottom: 30px;">
+
+  <div class="title-wrapper">
+    <div class="icon-box">
+      <ion-icon name="flask-outline"></ion-icon>
+    </div>
+
+    <h3 class="h3">Research & Thesis</h3>
+  </div>
+
+  <ol class="timeline-list">
+
+    <li class="timeline-item">
+
+      <h4 class="h4 timeline-item-title">Dual Degree Project: Multi-Resolution Wavelet Analysis on Biometrics</h4>
+
+      <span>Department of Electrical Engineering, IIT Bombay</span>
+
+      <p class="timeline-text">
+        Researching multi-resolution analysis using wavelets on biometric feature extraction, signals, and temporal network architectures under Professor Gadre.
+      </p>
+
+    </li>
+
+  </ol>
+
+</section>
         <section class="timeline">
 
           <div class="title-wrapper">
@@ -532,41 +395,12 @@
 
             <li class="timeline-item">
 
-              <h4 class="h4 timeline-item-title">University school of the arts</h4>
+              <h4 class="h4 timeline-item-title">Indian Institute of Technology Bombay</h4>
 
-              <span>2007 — 2008</span>
-
-              <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">New york academy of art</h4>
-
-              <span>2006 — 2007</span>
+              <span>Expected Graduation: 2027</span>
 
               <p class="timeline-text">
-                Ratione voluptatem sequi nesciunt, facere quisquams facere menda ossimus, omnis voluptas assumenda est
-                omnis..
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">High school of art and design</h4>
-
-              <span>2002 — 2004</span>
-
-              <p class="timeline-text">
-                Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur
-                magni dolores
-                eos.
+                B.Tech. in Electrical Engineering | Minor in Artificial Intelligence and Data Science
               </p>
 
             </li>
@@ -579,7 +413,7 @@
 
           <div class="title-wrapper">
             <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
+              <ion-icon name="briefcase-outline"></ion-icon>
             </div>
 
             <h3 class="h3">Experience</h3>
@@ -589,42 +423,39 @@
 
             <li class="timeline-item">
 
-              <h4 class="h4 timeline-item-title">Creative director</h4>
+              <h4 class="h4 timeline-item-title">AI Engineer Intern</h4>
 
-              <span>2015 — Present</span>
+              <span>Raekis.ai &bull; Remote</span>
 
               <p class="timeline-text">
-                Nemo enim ipsam voluptatem blanditiis praesentium voluptum delenit atque corrupti, quos dolores et qvuas
-                molestias
-                exceptur.
+                <!-- TODO: confirm internship start/end dates and detailed responsibilities -->
+                Building and deploying AI engineering solutions and model integrations.
               </p>
 
             </li>
 
             <li class="timeline-item">
 
-              <h4 class="h4 timeline-item-title">Art director</h4>
+              <h4 class="h4 timeline-item-title">Software Engineer Intern</h4>
 
-              <span>2013 — 2015</span>
+              <span>Attentions.ai &bull; Remote</span>
 
               <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
+                <!-- TODO: confirm internship start/end dates and detailed responsibilities -->
+                Developing scalable backend features and software application modules.
               </p>
 
             </li>
 
             <li class="timeline-item">
 
-              <h4 class="h4 timeline-item-title">Web designer</h4>
+              <h4 class="h4 timeline-item-title">Software Developer</h4>
 
-              <span>2010 — 2013</span>
+              <span>Placement Office, IIT Bombay &bull; Hybrid</span>
 
               <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
+                <!-- TODO: confirm internship start/end dates and detailed responsibilities -->
+                Engineering web applications and analytical platforms for placement management operations.
               </p>
 
             </li>
@@ -633,67 +464,67 @@
 
         </section>
 
-        <section class="skill">
+        <!--
+  - SKILLS SECTION
+-->
+<section class="skill">
 
-          <h3 class="h3 skills-title">My skills</h3>
+  <h3 class="h3 skills-title">Technical Expertise</h3>
 
-          <ul class="skills-list content-card">
+  <div class="skills-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px;">
 
-            <li class="skills-item">
+    <!-- Programming -->
+    <div class="content-card" style="padding: 20px; border-radius: 14px; background: var(--border-gradient-onyx);">
+      <h4 class="h4" style="margin-bottom: 15px; color: var(--white-2); font-size: 16px;">Programming</h4>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <span class="tech-badge">Python</span>
+        <span class="tech-badge">C++</span>
+        <span class="tech-badge">JavaScript</span>
+        <span class="tech-badge">TypeScript</span>
+        <span class="tech-badge">Dart</span>
+      </div>
+    </div>
 
-              <div class="title-wrapper">
-                <h5 class="h5">Web design</h5>
-                <data value="80">80%</data>
-              </div>
+    <!-- AI & Machine Learning -->
+    <div class="content-card" style="padding: 20px; border-radius: 14px; background: var(--border-gradient-onyx);">
+      <h4 class="h4" style="margin-bottom: 15px; color: var(--white-2); font-size: 16px;">AI & Machine Learning</h4>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <span class="tech-badge">PyTorch</span>
+        <span class="tech-badge">LLMs</span>
+        <span class="tech-badge">TensorFlow</span>
+        <span class="tech-badge">OpenCV</span>
+        <span class="tech-badge">Transformers</span>
+        <span class="tech-badge">RAG</span>
+        <span class="tech-badge">NLP</span>
+      </div>
+    </div>
 
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 80%;"></div>
-              </div>
+    <!-- Web Development -->
+    <div class="content-card" style="padding: 20px; border-radius: 14px; background: var(--border-gradient-onyx);">
+      <h4 class="h4" style="margin-bottom: 15px; color: var(--white-2); font-size: 16px;">Web Development</h4>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <span class="tech-badge">React</span>
+        <span class="tech-badge">HTML / CSS</span>
+        <span class="tech-badge">Node.js</span>
+      </div>
+    </div>
 
-            </li>
+    <!-- Tools & Infrastructure -->
+    <div class="content-card" style="padding: 20px; border-radius: 14px; background: var(--border-gradient-onyx);">
+      <h4 class="h4" style="margin-bottom: 15px; color: var(--white-2); font-size: 16px;">Tools & Infrastructure</h4>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <span class="tech-badge">Git</span>
+        <span class="tech-badge">Linux</span>
+        <span class="tech-badge">Docker</span>
+        <span class="tech-badge">PostgreSQL</span>
+        <span class="tech-badge">Firebase</span>
+        <span class="tech-badge">VS Code</span>
+      </div>
+    </div>
 
-            <li class="skills-item">
+  </div>
 
-              <div class="title-wrapper">
-                <h5 class="h5">Graphic design</h5>
-                <data value="70">70%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 70%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Branding</h5>
-                <data value="90">90%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 90%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">WordPress</h5>
-                <data value="50">50%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 50%;"></div>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </section>
+</section>
 
       </article>
 
@@ -720,15 +551,27 @@
             </li>
 
             <li class="filter-item">
-              <button data-filter-btn>Web design</button>
+              <button data-filter-btn>Artificial Intelligence</button>
             </li>
 
             <li class="filter-item">
-              <button data-filter-btn>Applications</button>
+              <button data-filter-btn>Computer Vision</button>
             </li>
 
             <li class="filter-item">
-              <button data-filter-btn>Web development</button>
+              <button data-filter-btn>Deep Learning Research</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Flutter</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Full Stack Development</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Embedded Systems</button>
             </li>
 
           </ul>
@@ -752,15 +595,27 @@
               </li>
 
               <li class="select-item">
-                <button data-select-item>Web design</button>
+                <button data-select-item>Artificial Intelligence</button>
               </li>
 
               <li class="select-item">
-                <button data-select-item>Applications</button>
+                <button data-select-item>Computer Vision</button>
               </li>
 
               <li class="select-item">
-                <button data-select-item>Web development</button>
+                <button data-select-item>Deep Learning Research</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Flutter</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Full Stack Development</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Embedded Systems</button>
               </li>
 
             </ul>
@@ -769,7 +624,8 @@
 
           <ul class="project-list">
 
-            <li class="project-item  active" data-filter-item data-category="web development">
+            <li class="project-item active" data-filter-item data-category="artificial intelligence">
+              <!-- TODO: confirm project repository/demo link -->
               <a href="#">
 
                 <figure class="project-img">
@@ -777,17 +633,18 @@
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
 
-                  <img src="./assets/images/project-1.jpg" alt="finance" loading="lazy">
+                  <img src="./assets/images/project-1.jpg" alt="AI Guard Agent" loading="lazy">
                 </figure>
 
-                <h3 class="project-title">Finance</h3>
+                <h3 class="project-title">AI Guard Agent</h3>
 
-                <p class="project-category">Web development</p>
+                <p class="project-category">Artificial Intelligence</p>
 
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web development">
+            <li class="project-item active" data-filter-item data-category="computer vision">
+              <!-- TODO: confirm project repository/demo link -->
               <a href="#">
 
                 <figure class="project-img">
@@ -795,17 +652,18 @@
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
 
-                  <img src="./assets/images/project-2.png" alt="orizon" loading="lazy">
+                  <img src="./assets/images/project-2.png" alt="RSICD Captioning" loading="lazy">
                 </figure>
 
-                <h3 class="project-title">Orizon</h3>
+                <h3 class="project-title">RSICD Captioning</h3>
 
-                <p class="project-category">Web development</p>
+                <p class="project-category">Computer Vision</p>
 
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web design">
+            <li class="project-item active" data-filter-item data-category="deep learning research">
+              <!-- TODO: confirm project repository/demo link -->
               <a href="#">
 
                 <figure class="project-img">
@@ -813,17 +671,18 @@
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
 
-                  <img src="./assets/images/project-3.jpg" alt="fundo" loading="lazy">
+                  <img src="./assets/images/project-3.jpg" alt="Event Camera Object Detection & Tracking" loading="lazy">
                 </figure>
 
-                <h3 class="project-title">Fundo</h3>
+                <h3 class="project-title">Event Camera Object Detection & Tracking</h3>
 
-                <p class="project-category">Web design</p>
+                <p class="project-category">Deep Learning Research</p>
 
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="applications">
+            <li class="project-item active" data-filter-item data-category="flutter">
+              <!-- TODO: confirm project repository/demo link -->
               <a href="#">
 
                 <figure class="project-img">
@@ -831,17 +690,18 @@
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
 
-                  <img src="./assets/images/project-4.png" alt="brawlhalla" loading="lazy">
+                  <img src="./assets/images/project-4.png" alt="Active Recall App" loading="lazy">
                 </figure>
 
-                <h3 class="project-title">Brawlhalla</h3>
+                <h3 class="project-title">Active Recall App</h3>
 
-                <p class="project-category">Applications</p>
+                <p class="project-category">Flutter</p>
 
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web design">
+            <li class="project-item active" data-filter-item data-category="full stack development">
+              <!-- TODO: confirm project repository/demo link -->
               <a href="#">
 
                 <figure class="project-img">
@@ -849,17 +709,18 @@
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
 
-                  <img src="./assets/images/project-5.png" alt="dsm." loading="lazy">
+                  <img src="./assets/images/project-5.png" alt="Placement Analytics Platform" loading="lazy">
                 </figure>
 
-                <h3 class="project-title">DSM.</h3>
+                <h3 class="project-title">Placement Analytics Platform</h3>
 
-                <p class="project-category">Web design</p>
+                <p class="project-category">Full Stack Development</p>
 
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web design">
+            <li class="project-item active" data-filter-item data-category="embedded systems">
+              <!-- TODO: confirm project repository/demo link -->
               <a href="#">
 
                 <figure class="project-img">
@@ -867,66 +728,12 @@
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
 
-                  <img src="./assets/images/project-6.png" alt="metaspark" loading="lazy">
+                  <img src="./assets/images/project-6.png" alt="Clap Controlled Appliance System" loading="lazy">
                 </figure>
 
-                <h3 class="project-title">MetaSpark</h3>
+                <h3 class="project-title">Clap Controlled Appliance System</h3>
 
-                <p class="project-category">Web design</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-7.png" alt="summary" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Summary</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-8.jpg" alt="task manager" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Task Manager</h3>
-
-                <p class="project-category">Applications</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-9.png" alt="arrival" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Arrival</h3>
-
-                <p class="project-category">Web development</p>
+                <p class="project-category">Embedded Systems</p>
 
               </a>
             </li>
@@ -942,185 +749,117 @@
 
 
       <!--
-        - #BLOG
+        - #INTERESTS
       -->
 
-      <article class="blog" data-page="blog">
+      <article class="interests" data-page="interests">
 
         <header>
-          <h2 class="h2 article-title">Blog</h2>
+          <h2 class="h2 article-title">Interests</h2>
         </header>
 
-        <section class="blog-posts">
+        <section class="service">
 
-          <ul class="blog-posts-list">
+          <h3 class="h3 service-title">Technical & Personal Interests</h3>
 
-            <li class="blog-post-item">
-              <a href="#">
+          <ul class="service-list">
 
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-1.jpg" alt="Design conferences in 2022" loading="lazy">
-                </figure>
+            <li class="service-item">
+              <div class="service-icon-box">
+                <ion-icon name="hardware-chip-outline" style="font-size: 30px; color: var(--orange-yellow-crayola);"></ion-icon>
+              </div>
 
-                <div class="blog-content">
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Artificial Intelligence & Machine Learning</h4>
 
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
-
-                  <p class="blog-text">
-                    Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.
-                  </p>
-
-                </div>
-
-              </a>
+                <p class="service-item-text">
+                  Deep interest in foundational machine learning algorithms, model optimization, and modern state-of-the-art architectures.
+                </p>
+              </div>
             </li>
 
-            <li class="blog-post-item">
-              <a href="#">
+            <li class="service-item">
+              <div class="service-icon-box">
+                <ion-icon name="eye-outline" style="font-size: 30px; color: var(--orange-yellow-crayola);"></ion-icon>
+              </div>
 
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy">
-                </figure>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Computer Vision & Deep Learning</h4>
 
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Best fonts every designer</h3>
-
-                  <p class="blog-text">
-                    Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.
-                  </p>
-
-                </div>
-
-              </a>
+                <p class="service-item-text">
+                  Exploring real-time object tracking, feature extraction, and automated spatial feature detection systems.
+                </p>
+              </div>
             </li>
 
-            <li class="blog-post-item">
-              <a href="#">
+            <li class="service-item">
+              <div class="service-icon-box">
+                <ion-icon name="chatbubbles-outline" style="font-size: 30px; color: var(--orange-yellow-crayola);"></ion-icon>
+              </div>
 
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-3.jpg" alt="Design digest #80" loading="lazy">
-                </figure>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Large Language Models</h4>
 
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #80</h3>
-
-                  <p class="blog-text">
-                    Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.
-                  </p>
-
-                </div>
-
-              </a>
+                <p class="service-item-text">
+                  Working with autonomous agents, context retrieval pipelines, and specialized prompt engineering workflows.
+                </p>
+              </div>
             </li>
 
-            <li class="blog-post-item">
-              <a href="#">
+            <li class="service-item">
+              <div class="service-icon-box">
+                <ion-icon name="code-slash-outline" style="font-size: 30px; color: var(--orange-yellow-crayola);"></ion-icon>
+              </div>
 
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-4.jpg" alt="UI interactions of the week" loading="lazy">
-                </figure>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Full-Stack Development & Open Source</h4>
 
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">UI interactions of the week</h3>
-
-                  <p class="blog-text">
-                    Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.
-                  </p>
-
-                </div>
-
-              </a>
+                <p class="service-item-text">
+                  Building efficient software applications, participating in open-source software projects, and developing clean Web systems.
+                </p>
+              </div>
             </li>
 
-            <li class="blog-post-item">
-              <a href="#">
+            <li class="service-item">
+              <div class="service-icon-box">
+                <ion-icon name="terminal-outline" style="font-size: 30px; color: var(--orange-yellow-crayola);"></ion-icon>
+              </div>
 
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
-                </figure>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Systems Programming</h4>
 
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
-
-                  <p class="blog-text">
-                    Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-
-                </div>
-
-              </a>
+                <p class="service-item-text">
+                  Studying low-level system design, operating system internals, and performance-critical Linux applications.
+                </p>
+              </div>
             </li>
 
-            <li class="blog-post-item">
-              <a href="#">
+            <li class="service-item">
+              <div class="service-icon-box">
+                <ion-icon name="trophy-outline" style="font-size: 30px; color: var(--orange-yellow-crayola);"></ion-icon>
+              </div>
 
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-6.jpg" alt="Design digest #79" loading="lazy">
-                </figure>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Table Tennis</h4>
 
-                <div class="blog-content">
+                <p class="service-item-text">
+                  Enthusiastic table tennis player engaging in competitive matches and institutional sports events.
+                </p>
+              </div>
+            </li>
 
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
+            <li class="service-item">
+              <div class="service-icon-box">
+                <ion-icon name="football-outline" style="font-size: 30px; color: var(--orange-yellow-crayola);"></ion-icon>
+              </div>
 
-                    <span class="dot"></span>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Football</h4>
 
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #79</h3>
-
-                  <p class="blog-text">
-                    Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.
-                  </p>
-
-                </div>
-
-              </a>
+                <p class="service-item-text">
+                  Passionate football fan following world sports and an avid admirer of Lionel Messi.
+                </p>
+              </div>
             </li>
 
           </ul>
@@ -1134,47 +873,125 @@
 
 
       <!--
-        - #CONTACT
-      -->
+  - #CONTACT
+-->
 
-      <article class="contact" data-page="contact">
+<article class="contact" data-page="contact">
 
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
+  <header>
+    <h2 class="h2 article-title">Contact</h2>
+  </header>
 
-        <section class="mapbox" data-mapbox>
-          <figure>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199666.5651251294!2d-121.58334177520186!3d38.56165006739519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ac672b28397f9%3A0x921f6aaa74197fdb!2sSacramento%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1647608789441!5m2!1sen!2sbd"
-              width="400" height="300" loading="lazy"></iframe>
-          </figure>
-        </section>
+  <!-- Contact Details & Social Links Card -->
+  <section class="about-text" style="margin-bottom: 30px;">
+    <div class="content-card" style="padding: 25px; border-radius: 16px; background: var(--border-gradient-onyx);">
+      <h3 class="h3" style="margin-bottom: 20px; color: var(--white-2);">Get in Touch</h3>
 
-        <section class="contact-form">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 25px;">
+        
+        <!-- Email -->
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div class="icon-box" style="width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: var(--onyx); color: var(--orange-yellow-crayola); font-size: 20px;">
+            <ion-icon name="mail-outline"></ion-icon>
+          </div>
+          <div>
+            <p style="font-size: 12px; color: var(--light-gray-70); text-transform: uppercase;">Email ID</p>
+            <a href="mailto:khariwalhardik@gmail.com" style="color: var(--white-2); font-size: 14px; word-break: break-all;">khariwalhardik@gmail.com</a>
+          </div>
+        </div>
 
-          <h3 class="h3 form-title">Contact Form</h3>
+        <!-- Phone Number -->
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div class="icon-box" style="width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: var(--onyx); color: var(--orange-yellow-crayola); font-size: 20px;">
+            <ion-icon name="call-outline"></ion-icon>
+          </div>
+          <div>
+            <p style="font-size: 12px; color: var(--light-gray-70); text-transform: uppercase;">Contact Number</p>
+            <a href="tel:+919950229120" style="color: var(--white-2); font-size: 14px;">+91 99502 29120</a>
+          </div>
+        </div>
 
-          <form action="#" class="form" data-form>
+      </div>
 
-            <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
+      <div style="border-top: 1px solid var(--jet); padding-top: 20px;">
+        <p style="font-size: 13px; color: var(--light-gray-70); text-transform: uppercase; margin-bottom: 15px;">Connect on Social Media</p>
+        
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+          
+          <!-- LinkedIn -->
+          <a href="https://linkedin.com/in/hardikkhariwal" target="_blank" rel="noopener noreferrer" class="tech-badge" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+            <ion-icon name="logo-linkedin" style="font-size: 18px;"></ion-icon>
+            <span>LinkedIn</span>
+          </a>
 
-              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
-            </div>
+          <!-- GitHub -->
+          <a href="https://github.com/khariwalhardik" target="_blank" rel="noopener noreferrer" class="tech-badge" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+            <ion-icon name="logo-github" style="font-size: 18px;"></ion-icon>
+            <span>GitHub</span>
+          </a>
 
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+          <!-- Twitter / X -->
+          <!-- TODO: update Twitter / X handle URL -->
+          <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="tech-badge" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+            <ion-icon name="logo-twitter" style="font-size: 18px;"></ion-icon>
+            <span>Twitter / X</span>
+          </a>
 
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Send Message</span>
-            </button>
+          <!-- Instagram -->
+          <!-- TODO: update Instagram handle URL -->
+          <a href="https://instagram.com/hardik.khariwal" target="_blank" rel="noopener noreferrer" class="tech-badge" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+            <ion-icon name="logo-instagram" style="font-size: 18px;"></ion-icon>
+            <span>Instagram</span>
+          </a>
 
-          </form>
+        </div>
+      </div>
 
-        </section>
+    </div>
+  </section>
 
-      </article>
+  <!-- Google Map Section -->
+  <section class="mapbox" data-mapbox>
+    <figure>
+      <iframe
+        src="https://maps.google.com/maps?q=IIT%20Bombay,%20Powai,%20Mumbai,%20Maharashtra&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        width="100%"
+        height="300"
+        style="border:0; filter: none !important;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Google Maps Location of IIT Bombay, Powai, Mumbai, Maharashtra"></iframe>
+    </figure>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section class="contact-form">
+
+    <h3 class="h3 form-title">Contact Form</h3>
+
+    <form id="portfolio-contact-form" action="https://margy-subtetanical-myrle.ngrok-free.dev/api/contact" method="POST" class="form" data-form>
+
+      <div class="input-wrapper">
+        <input type="text" name="name" class="form-input" placeholder="Full name" required data-form-input>
+
+        <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
+      </div>
+
+      <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+
+      <button class="form-btn" type="submit" disabled data-form-btn>
+        <ion-icon name="paper-plane"></ion-icon>
+        <span>Send Message</span>
+      </button>
+
+    </form>
+
+    <p id="form-status" style="margin-top: 15px; font-size: 14px; font-weight: 500; display: none; text-align: left;"></p>
+
+  </section>
+
+</article>
 
     </div>
 
@@ -1196,6 +1013,86 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+  <!-- Floating "Ask AI Hardik" Chatbot Widget -->
+<div id="ai-chat-widget">
+  <!-- Trigger Button -->
+  <button id="ai-chat-btn" title="Ask AI Hardik" aria-label="Open AI Assistant">
+    <ion-icon name="sparkles-outline"></ion-icon>
+  </button>
+
+  <!-- Chat Window -->
+  <div id="ai-chat-window" style="display: none;">
+    <div class="ai-chat-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="ai-avatar">
+          <ion-icon name="sparkles"></ion-icon>
+        </div>
+        <div>
+          <h4 style="margin: 0; font-size: 14px; color: var(--white-2);">Ask AI Hardik</h4>
+          <span style="font-size: 11px; color: #00ff88;">• Online</span>
+        </div>
+      </div>
+      <button id="ai-chat-close" style="background: transparent; border: none; color: var(--light-gray-70); cursor: pointer; font-size: 20px;">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </div>
+
+    <!-- Messages Container -->
+    <div id="ai-chat-messages">
+      <div class="ai-msg bot">
+        Hi! I'm Hardik's AI assistant. Ask me anything about his experience, skills, IIT Bombay research, or projects!
+      </div>
+    </div>
+
+    <!-- Quick Prompts -->
+    <div class="ai-quick-prompts">
+      <button class="ai-chip" onclick="sendQuickPrompt('What is your tech stack?')">Tech Stack?</button>
+      <button class="ai-chip" onclick="sendQuickPrompt('Tell me about your AI experience')">AI Experience?</button>
+      <button class="ai-chip" onclick="sendQuickPrompt('What are your projects?')">Projects?</button>
+    </div>
+
+    <!-- Input Form -->
+    <form id="ai-chat-form" style="display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--jet);">
+      <input type="text" id="ai-chat-input" placeholder="Type a message..." required autocomplete="off">
+      <button type="submit" id="ai-chat-send">
+        <ion-icon name="paper-plane-outline"></ion-icon>
+      </button>
+    </form>
+  </div>
+</div>
+<!-- Interactive Terminal Easter Egg Modal -->
+<div id="terminal-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 10, 12, 0.92); z-index: 20000; justify-content: center; align-items: center; backdrop-filter: blur(8px);">
+  
+  <div style="width: 90%; max-width: 850px; height: 520px; background: #0c0c0e; border: 1px solid var(--orange-yellow-crayola, #ffdb70); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.8); font-family: 'Courier New', Courier, monospace;">
+    
+    <!-- Terminal Header Bar -->
+    <div style="background: #18181c; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #28282e;">
+      <div style="display: flex; gap: 8px;">
+        <span id="term-close-dot" style="width: 12px; height: 12px; background: #ff5f56; border-radius: 50%; cursor: pointer;"></span>
+        <span style="width: 12px; height: 12px; background: #ffbd2e; border-radius: 50%;"></span>
+        <span style="width: 12px; height: 12px; background: #27c93f; border-radius: 50%;"></span>
+      </div>
+      <span style="font-size: 12px; color: #a0a0a0; font-weight: bold;">hkhariwal@iitb-dev:~ (zsh)</span>
+      <span style="font-size: 11px; color: #666;">Type 'help' or 'exit'</span>
+    </div>
+
+    <!-- Terminal Output Area -->
+    <div id="terminal-output" style="flex: 1; padding: 16px; overflow-y: auto; color: #d6d6d6; font-size: 13px; line-height: 1.5; white-space: pre-wrap;">
+      <div style="color: var(--orange-yellow-crayola, #ffdb70); font-weight: bold; margin-bottom: 10px;">
+Welcome to Hardik Khariwal's CLI Shell (v1.0.0-release)
+Type 'help' to view available commands or 'exit' to close shell.
+      </div>
+    </div>
+
+    <!-- Terminal Prompt Line -->
+    <div style="display: flex; align-items: center; padding: 12px 16px; background: #121215; border-top: 1px solid #222228; gap: 8px;">
+      <span style="color: #00ff88; font-weight: bold; font-size: 13px;">hkhariwal@iitb-dev:~$</span>
+      <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" style="flex: 1; background: transparent; border: none; outline: none; color: #ffffff; font-family: monospace; font-size: 13px;">
+    </div>
+
+  </div>
+
+</div>
 </body>
 
 </html>
