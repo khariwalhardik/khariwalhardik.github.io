@@ -120,7 +120,6 @@ for (let i = 0; i < formInputs.length; i++) {
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
-// add event to all nav links (FIXED: scope variable shadowing bug fixed with `j`)
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
     const clickedNavText = this.innerHTML.toLowerCase().trim();
@@ -145,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (contactForm) {
     contactForm.addEventListener("submit", function (e) {
-      e.preventDefault(); // Prevent page reload/redirect
+      e.preventDefault();
 
       const submitBtn = contactForm.querySelector("[data-form-btn]");
       const btnTextSpan = submitBtn ? submitBtn.querySelector("span") : null;
@@ -221,15 +220,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-
-/* ==========================================================================
-   Creative Extras: Synthesized Sound Effects & 3D Card Tilt
-   ========================================================================== */
-
+/* Creative Extras: Synthesized Sound Effects & 3D Card Tilt */
 document.addEventListener("DOMContentLoaded", function () {
-
-  // --- 1. Audio Sound Effects on UI Interactions ---
-  // Uses Web Audio API (No external sound files required)
   let audioCtx = null;
 
   function playUiClickSound(freq = 600, type = 'sine', duration = 0.04) {
@@ -256,12 +248,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       osc.start();
       osc.stop(audioCtx.currentTime + duration);
-    } catch (e) {
-      // AudioContext fallback for blocked autoplay policies
-    }
+    } catch (e) {}
   }
 
-  // Attach click sound to Navbar Links, Filter Buttons, and Badges
   const clickableElements = document.querySelectorAll(
     ".navbar-link, [data-filter-btn], .tech-badge, .form-btn, .info_more-btn"
   );
@@ -272,14 +261,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-
-  // --- 2. Interactive 3D / Tilt Effect on Cards ---
   const tiltCards = document.querySelectorAll(
     ".project-item, .content-card, .service-item"
   );
 
   tiltCards.forEach(card => {
-    // Add smooth transition reset styling directly
     card.style.willChange = "transform";
     card.style.transformStyle = "preserve-3d";
 
@@ -288,7 +274,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
 
-      // Subtle rotation values (Max ~10deg)
       const rotateX = (-y / (rect.height / 2)) * 8;
       const rotateY = (x / (rect.width / 2)) * 8;
 
@@ -301,14 +286,9 @@ document.addEventListener("DOMContentLoaded", function () {
       card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)";
     });
   });
-
 });
 
-
-/* ==========================================================================
-   Soothing Ambient Background Sound Generator (Louder & Richer Warm Drone)
-   ========================================================================== */
-
+/* Ambient Sound Generator */
 document.addEventListener("DOMContentLoaded", function () {
   let ambientAudioCtx = null;
   let masterGain = null;
@@ -319,19 +299,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const bgIcon = document.getElementById("bg-music-icon");
   const bgText = document.getElementById("bg-music-text");
 
-  // Rich, soothing chord notes: C3, G3, C4, E4, G4 (Cmaj chord ensemble)
-  // const chordFrequencies = [130.81, 196.00, 261.63, 329.63, 392.00];
-  // Dmaj7 / F#m Ambient Chord (Hz): D3, A3, C#4, F#4, A4
-const chordFrequencies = [146.83, 220.00, 277.18, 369.99, 440.00];
+  const chordFrequencies = [146.83, 220.00, 277.18, 369.99, 440.00];
 
   function startAmbientSound() {
     ambientAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
     
-    // Master Gain for smooth volume transitions
     masterGain = ambientAudioCtx.createGain();
     masterGain.gain.setValueAtTime(0.001, ambientAudioCtx.currentTime);
     
-    // Warm low-pass filter (increased cutoff slightly to 550Hz for clearer presence without harshness)
     const filter = ambientAudioCtx.createBiquadFilter();
     filter.type = "lowpass";
     filter.frequency.value = 550; 
@@ -339,20 +314,16 @@ const chordFrequencies = [146.83, 220.00, 277.18, 369.99, 440.00];
     masterGain.connect(filter);
     filter.connect(ambientAudioCtx.destination);
 
-    // Create layered sine and soft triangle wave oscillators for a lush, full pad sound
     chordFrequencies.forEach((freq, index) => {
       const osc = ambientAudioCtx.createOscillator();
       const oscGain = ambientAudioCtx.createGain();
 
-      // Alternate wave types to add depth and warmth
       osc.type = index % 2 === 0 ? "sine" : "triangle";
       
-      // Slight sub-cent detune for a natural ambient chorus effect
       const detuneAmount = (index % 2 === 0 ? 1 : -1) * 3;
       osc.frequency.setValueAtTime(freq, ambientAudioCtx.currentTime);
       osc.detune.setValueAtTime(detuneAmount, ambientAudioCtx.currentTime);
 
-      // Increased per-note volume level
       oscGain.gain.value = 0.08; 
 
       osc.connect(oscGain);
@@ -361,13 +332,11 @@ const chordFrequencies = [146.83, 220.00, 277.18, 369.99, 440.00];
       oscillators.push(osc);
     });
 
-    // Fade-in over 2 seconds to a clearer, comfortable listening level (0.35 max gain)
     masterGain.gain.exponentialRampToValueAtTime(0.35, ambientAudioCtx.currentTime + 2);
   }
 
   function stopAmbientSound() {
     if (masterGain && ambientAudioCtx) {
-      // Smooth fade-out over 1.5 seconds
       masterGain.gain.exponentialRampToValueAtTime(0.0001, ambientAudioCtx.currentTime + 1.5);
       setTimeout(() => {
         oscillators.forEach((osc) => osc.stop());
@@ -380,7 +349,7 @@ const chordFrequencies = [146.83, 220.00, 277.18, 369.99, 440.00];
 
   if (bgBtn) {
     bgBtn.addEventListener("click", function (e) {
-      e.stopPropagation(); // Prevents nav tab switching conflict
+      e.stopPropagation();
 
       if (!isPlaying) {
         startAmbientSound();
@@ -397,10 +366,7 @@ const chordFrequencies = [146.83, 220.00, 277.18, 369.99, 440.00];
   }
 });
 
-/* ==========================================================================
-   Interactive Command Palette with Arrow Key Navigation
-   ========================================================================== */
-
+/* Command Palette */
 document.addEventListener("DOMContentLoaded", function () {
   const cmdPalette = document.getElementById("cmd-palette");
   const cmdInput = document.getElementById("cmd-input");
@@ -519,7 +485,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Open via Navbar Trigger Button
   if (cmdTriggerBtn) {
     cmdTriggerBtn.addEventListener("click", function (e) {
       e.preventDefault();
@@ -528,7 +493,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Keyboard Shortcuts (Cmd + K / Esc)
   document.addEventListener("keydown", function (e) {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
       e.preventDefault();
@@ -542,7 +506,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.key === "Escape") closePalette();
   });
 
-  // Handle Input Typing & Arrow Key Navigation
   if (cmdInput) {
     cmdInput.addEventListener("input", function () {
       const query = this.value.toLowerCase().trim();
@@ -572,7 +535,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Close when clicking overlay backdrop
   if (cmdPalette) {
     cmdPalette.addEventListener("click", function (e) {
       if (e.target === cmdPalette) closePalette();
@@ -580,10 +542,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-/* ==========================================================================
-   Ask AI Hardik Chatbot Widget Logic
-   ========================================================================== */
-
+/* Ask AI Hardik Chatbot Logic */
 document.addEventListener("DOMContentLoaded", function () {
   const chatBtn = document.getElementById("ai-chat-btn");
   const chatWindow = document.getElementById("ai-chat-window");
@@ -592,7 +551,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const chatInput = document.getElementById("ai-chat-input");
   const chatMessages = document.getElementById("ai-chat-messages");
 
-  // Toggle Window
   if (chatBtn) {
     chatBtn.addEventListener("click", () => {
       const isHidden = chatWindow.style.display === "none" || !chatWindow.style.display;
@@ -607,7 +565,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Global Quick Prompt Handler
   window.sendQuickPrompt = function (text) {
     if (chatInput) {
       chatInput.value = text;
@@ -615,18 +572,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // Submit Handler
   if (chatForm) {
     chatForm.addEventListener("submit", async function (e) {
       e.preventDefault();
       const message = chatInput.value.trim();
       if (!message) return;
 
-      // Append User Message
       appendMessage(message, "user");
       chatInput.value = "";
 
-      // Append Loading Indicator
       const loadingMsg = appendMessage("Typing...", "bot");
 
       try {
@@ -666,15 +620,31 @@ if (cmdTriggerBtn) {
   });
 }
 
-/* ==========================================================================
-   Interactive Terminal Easter Egg Logic
-   ========================================================================== */
-
+/* Interactive Terminal CLI & Mini-Games Controller */
 document.addEventListener("DOMContentLoaded", function () {
   const termModal = document.getElementById("terminal-modal");
   const termInput = document.getElementById("terminal-input");
   const termOutput = document.getElementById("terminal-output");
   const termCloseDot = document.getElementById("term-close-dot");
+
+  let activeGameMode = null; // 'snake', 'tetris', 'quiz', 'tictactoe'
+  let snakeInterval = null;
+  let tetrisInterval = null;
+  let matrixInterval = null;
+
+  // Quiz State
+  let quizIndex = 0;
+  let quizScore = 0;
+  const quizQuestions = [
+    { q: "1. Which loss function is commonly used for multi-class classification?", options: ["A) MSE", "B) Cross-Entropy", "C) Hinge Loss"], answer: "b" },
+    { q: "2. What algorithm is used to extract multi-resolution signal features?", options: ["A) Fourier Transform", "B) Wavelet Transform", "C) K-Means"], answer: "b" },
+    { q: "3. What does RAG stand for in AI architecture?", options: ["A) Retrieval-Augmented Generation", "B) Recurrent Array Graph", "C) Random Access Group"], answer: "a" },
+    { q: "4. What framework is primary for Flask WSGI servers?", options: ["A) Werkzeug", "B) Express", "C) NestJS"], answer: "a" },
+    { q: "5. What is the primary tech symposium at IIT Bombay?", options: ["A) Techfest", "B) Mood Indigo", "C) E-Summit"], answer: "a" }
+  ];
+
+  // TicTacToe State
+  let tttBoard = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
   window.openTerminalModal = function () {
     if (termModal) {
@@ -684,10 +654,27 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function closeTerminalModal() {
+    stopSnakeGame();
+    stopTetrisGame();
+    stopMatrixRain();
     if (termModal) termModal.style.display = "none";
   }
 
   if (termCloseDot) termCloseDot.addEventListener("click", closeTerminalModal);
+
+  function appendOutput(text, color = "#a9b7c6") {
+    const div = document.createElement("div");
+    div.style.color = color;
+    div.style.marginBottom = "8px";
+    div.innerHTML = text;
+    termOutput.appendChild(div);
+    termOutput.scrollTop = termOutput.scrollHeight;
+    return div;
+  }
+
+  function escapeHtml(text) {
+    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
 
   const commandResponses = {
     help: `Available Commands:
@@ -696,7 +683,12 @@ document.addEventListener("DOMContentLoaded", function () {
   ping raekis     - Simulate live latency to Raekis AI production backend
   clear           - Clear terminal screen
   about           - Display developer summary
-  exit            - Close interactive terminal`,
+  matrix          - Trigger green falling code rain (ESC/stop to exit)
+  snake           - Play terminal Snake game (WASD / Arrows)
+  tetris          - Play terminal Tetris game (A/D: Move, W: Rotate, S: Drop)
+  quiz            - Take 5-question AI/Engineering Quiz
+  tictactoe       - Play Tic-Tac-Toe against AI bot
+  exit            - Close terminal`,
 
     about: `Hardik Khariwal
 Dual Degree (B.Tech + M.Tech) Student @ IIT Bombay
@@ -707,96 +699,538 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
                        HARDIK KHARIWAL
       khariwalhardik@gmail.com | IIT Bombay, Powai, Mumbai
 ===============================================================
-
 [EDUCATION]
-* Dual Degree (B.Tech + M.Tech) Electrical Engineering, IIT Bombay
+* Dual Degree Electrical Engineering, IIT Bombay
   - Specialization: Signal Processing & Communications
   - Minor: AI & Data Science
-
 [EXPERIENCE]
 * AI Engineer Intern | Raekis.ai (California, US)
-  - Engineered autonomous AI agent workflows and LLM systems.
 * Software Developer | Placement Office, IIT Bombay
-  - Full-stack web and platform infrastructure development.
-
-[RESEARCH]
-* Dual Degree Thesis under Prof. Gadre
-  - Multi-Resolution Wavelet Analysis on Biometrics.
 ===============================================================`,
 
     skills: `tech-stack/
-├── languages/
-│   ├── Python
-│   ├── C/C++
-│   ├── TypeScript
-│   └── SQL
-├── ai_ml/
-│   ├── PyTorch
-│   ├── LLMs & Agentic Workflows
-│   ├── RAG & Prompt Engineering
-│   └── OpenCV
-├── fullstack/
-│   ├── React & Next.js
-│   ├── Flask & FastAPI
-│   ├── Node.js & PostgreSQL
-│   └── Docker & Linux (Ubuntu/Kali)
-└── current_focus/
-    └── Wavelet Analysis & Autonomous AI Agents`,
-
-    "ping raekis": `PING api.raekis.ai (104.21.32.12) 56(84) bytes of data.
-64 bytes from 104.21.32.12: icmp_seq=1 ttl=58 time=18.4 ms
-64 bytes from 104.21.32.12: icmp_seq=2 ttl=58 time=16.2 ms
-64 bytes from 104.21.32.12: icmp_seq=3 ttl=58 time=17.1 ms
---- api.raekis.ai ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, time 2003ms
-rtt min/avg/max/mdev = 16.204/17.233/18.411/0.908 ms`
+├── languages/ (Python, C++, TypeScript, SQL)
+├── ai_ml/ (PyTorch, LLMs, RAG, OpenCV)
+├── fullstack/ (React, Flask, Node.js, PostgreSQL)
+└── infrastructure/ (Docker, Linux, Git)`
   };
 
+  // --- TERMINAL INPUT LISTENER ---
   if (termInput) {
     termInput.addEventListener("keydown", function (e) {
       if (e.key === "Enter") {
         const cmd = this.value.trim().toLowerCase();
         this.value = "";
 
-        if (!cmd) return;
+        if (!cmd && !activeGameMode) return;
 
-        // Print entered command
-        const line = document.createElement("div");
-        line.style.margin = "6px 0";
-        line.innerHTML = `<span style="color: #00ff88;">hkhariwal@iitb-dev:~$</span> ${escapeHtml(cmd)}`;
-        termOutput.appendChild(line);
+        if (!activeGameMode) {
+          appendOutput(`<span style="color: #00ff88;">hkhariwal@iitb-dev:~$</span> ${escapeHtml(cmd)}`);
+        }
+
+        if (activeGameMode === 'quiz') {
+          handleQuizInput(cmd);
+          return;
+        }
+
+        if (activeGameMode === 'tictactoe') {
+          handleTicTacToeInput(cmd);
+          return;
+        }
 
         if (cmd === "clear") {
           termOutput.innerHTML = "";
+          stopMatrixRain();
+        } else if (cmd === "stop" || cmd === "q") {
+          stopMatrixRain();
+          appendOutput("Matrix animation stopped.", "var(--orange-yellow-crayola)");
         } else if (cmd === "exit") {
           closeTerminalModal();
+        } else if (cmd === "matrix") {
+          startMatrixRain();
+        } else if (cmd === "snake") {
+          startSnakeGame();
+        } else if (cmd === "tetris") {
+          startTetrisGame();
+        } else if (cmd === "quiz") {
+          startQuizGame();
+        } else if (cmd === "tictactoe") {
+          startTicTacToeGame();
         } else if (commandResponses[cmd]) {
-          const resp = document.createElement("div");
-          resp.style.color = "#a9b7c6";
-          resp.style.marginBottom = "10px";
-          resp.innerText = commandResponses[cmd];
-          termOutput.appendChild(resp);
+          appendOutput(commandResponses[cmd], "#a9b7c6");
         } else {
-          const err = document.createElement("div");
-          err.style.color = "#ff5f56";
-          err.style.marginBottom = "10px";
-          err.innerText = `zsh: command not found: ${cmd}. Type 'help' for available commands.`;
-          termOutput.appendChild(err);
+          appendOutput(`zsh: command not found: ${cmd}. Type 'help' for available commands.`, "#ff5f56");
         }
-
-        termOutput.scrollTop = termOutput.scrollHeight;
       }
     });
   }
 
-  function escapeHtml(text) {
-    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  // --- MATRIX RAIN EFFECT ---
+  function startMatrixRain() {
+    const canvas = document.getElementById("matrix-canvas");
+    if (!canvas) return;
+
+    canvas.style.display = "block";
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0101010101";
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    if (matrixInterval) clearInterval(matrixInterval);
+
+    matrixInterval = setInterval(() => {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#00ff88";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }, 33);
+
+    appendOutput("Matrix rain initiated across display. Press [ESC] or type 'stop' to end.", "var(--orange-yellow-crayola)");
   }
 
-  // Close terminal with ESC key
+  function stopMatrixRain() {
+    if (matrixInterval) {
+      clearInterval(matrixInterval);
+      matrixInterval = null;
+    }
+    const canvas = document.getElementById("matrix-canvas");
+    if (canvas) {
+      canvas.style.display = "none";
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  // --- RETRO SNAKE GAME ---
+  function startSnakeGame() {
+    activeGameMode = "snake";
+    stopSnakeGame();
+
+    if (termModal) termModal.focus();
+    if (termInput) termInput.blur();
+
+    appendOutput("<br>🐍 <strong>SNAKE GAME STARTED!</strong> Use <strong>WASD</strong> or <strong>Arrow Keys</strong>. Press 'q' to quit.", "var(--orange-yellow-crayola)");
+
+    const gameDiv = document.createElement("div");
+    gameDiv.id = "snake-game-screen";
+    gameDiv.style.cssText = "font-family: monospace; background: #000; padding: 14px; border: 1px solid #00ff88; border-radius: 8px; margin: 10px 0; text-align: center;";
+    termOutput.appendChild(gameDiv);
+
+    const width = 28;
+    const height = 12;
+    let snake = [{ x: 10, y: 6 }, { x: 9, y: 6 }, { x: 8, y: 6 }];
+    let food = { x: 20, y: 6 };
+    let dir = { x: 1, y: 0 };
+    let score = 0;
+
+    function renderBoard() {
+      let grid = "";
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          if (x === food.x && y === food.y) {
+            grid += "🍎";
+          } else if (snake.some(s => s.x === x && s.y === y)) {
+            grid += "🟩";
+          } else {
+            grid += "▪️";
+          }
+        }
+        grid += "\n";
+      }
+      gameDiv.innerHTML = `<pre style="margin:0; font-size: 15px; line-height: 1.2;">${grid}</pre><div style="color:#00ff88; font-size: 14px; margin-top: 8px; font-weight: bold;">Score: ${score} | WASD / Arrow Keys</div>`;
+      termOutput.scrollTop = termOutput.scrollHeight;
+    }
+
+    snakeInterval = setInterval(() => {
+      const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+      if (head.x < 0 || head.x >= width || head.y < 0 || head.y >= height || snake.some(s => s.x === head.x && s.y === head.y)) {
+        stopSnakeGame();
+        appendOutput(`💀 <strong>GAME OVER!</strong> Final Score: ${score}`, "#ff5f56");
+        if (termInput) termInput.focus();
+        return;
+      }
+
+      snake.unshift(head);
+
+      if (head.x === food.x && head.y === food.y) {
+        score += 10;
+        food = { x: Math.floor(Math.random() * width), y: Math.floor(Math.random() * height) };
+      } else {
+        snake.pop();
+      }
+
+      renderBoard();
+    }, 150);
+
+    // Global Key Listener for Snake Controls
+    window.handleSnakeControls = function(e) {
+      if (activeGameMode !== "snake") return;
+
+      const k = e.key.toLowerCase();
+      const gameKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "w", "a", "s", "d"];
+
+      if (gameKeys.includes(e.key) || gameKeys.includes(k)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if ((k === "w" || e.key === "ArrowUp") && dir.y === 0) dir = { x: 0, y: -1 };
+      if ((k === "s" || e.key === "ArrowDown") && dir.y === 0) dir = { x: 0, y: 1 };
+      if ((k === "a" || e.key === "ArrowLeft") && dir.x === 0) dir = { x: -1, y: 0 };
+      if ((k === "d" || e.key === "ArrowRight") && dir.x === 0) dir = { x: 1, y: 0 };
+
+      if (k === "q") {
+        stopSnakeGame();
+        appendOutput("Snake game exited.", "#ff5f56");
+        if (termInput) termInput.focus();
+      }
+    };
+
+    window.addEventListener("keydown", window.handleSnakeControls, true);
+  }
+
+  function stopSnakeGame() {
+    if (snakeInterval) clearInterval(snakeInterval);
+    snakeInterval = null;
+    if (window.handleSnakeControls) {
+      window.removeEventListener("keydown", window.handleSnakeControls, true);
+      window.handleSnakeControls = null;
+    }
+    if (activeGameMode === "snake") activeGameMode = null;
+  }
+
+  // --- RETRO TETRIS GAME ---
+  function startTetrisGame() {
+    activeGameMode = "tetris";
+    stopTetrisGame();
+
+    if (termModal) termModal.focus();
+    if (termInput) termInput.blur();
+
+    appendOutput("<br>🧩 <strong>TETRIS STARTED!</strong> Controls: <strong>A/D</strong> or <strong>Left/Right</strong> (Move), <strong>W</strong> or <strong>Up</strong> (Rotate), <strong>S</strong> or <strong>Down</strong> (Drop). Press 'q' to quit.", "var(--orange-yellow-crayola)");
+
+    const gameDiv = document.createElement("div");
+    gameDiv.id = "tetris-game-screen";
+    gameDiv.style.cssText = "font-family: monospace; background: #000; padding: 14px; border: 1px solid #00ff88; border-radius: 8px; margin: 10px 0; text-align: center;";
+    termOutput.appendChild(gameDiv);
+
+    const cols = 10;
+    const rows = 14;
+    let board = Array.from({ length: rows }, () => Array(cols).fill("▪️"));
+    let score = 0;
+    let linesCleared = 0;
+
+    const shapes = {
+      I: [[1,1,1,1]],
+      J: [[1,0,0],[1,1,1]],
+      L: [[0,0,1],[1,1,1]],
+      O: [[1,1],[1,1]],
+      S: [[0,1,1],[1,1,0]],
+      T: [[0,1,0],[1,1,1]],
+      Z: [[1,1,0],[0,1,1]]
+    };
+
+    const blocks = ["🟦", "🟩", "🟨", "🟧", "🟪", "🟥", "🟫"];
+
+    function getRandomPiece() {
+      const keys = Object.keys(shapes);
+      const key = keys[Math.floor(Math.random() * keys.length)];
+      const block = blocks[Math.floor(Math.random() * blocks.length)];
+      return {
+        shape: shapes[key],
+        block: block,
+        x: Math.floor((cols - shapes[key][0].length) / 2),
+        y: 0
+      };
+    }
+
+    let currentPiece = getRandomPiece();
+
+    function collide(pX, pY, shape) {
+      for (let r = 0; r < shape.length; r++) {
+        for (let c = 0; c < shape[r].length; c++) {
+          if (shape[r][c]) {
+            let newX = pX + c;
+            let newY = pY + r;
+            if (newX < 0 || newX >= cols || newY >= rows) return true;
+            if (newY >= 0 && board[newY][newX] !== "▪️") return true;
+          }
+        }
+      }
+      return false;
+    }
+
+    function rotate(matrix) {
+      return matrix[0].map((_, index) => matrix.map(row => row[index]).reverse());
+    }
+
+    function lockPiece() {
+      for (let r = 0; r < currentPiece.shape.length; r++) {
+        for (let c = 0; c < currentPiece.shape[r].length; c++) {
+          if (currentPiece.shape[r][c]) {
+            let boardY = currentPiece.y + r;
+            let boardX = currentPiece.x + c;
+            if (boardY >= 0) board[boardY][boardX] = currentPiece.block;
+          }
+        }
+      }
+
+      let lines = 0;
+      for (let r = rows - 1; r >= 0; r--) {
+        if (board[r].every(cell => cell !== "▪️")) {
+          board.splice(r, 1);
+          board.unshift(Array(cols).fill("▪️"));
+          lines++;
+          r++;
+        }
+      }
+
+      if (lines > 0) {
+        linesCleared += lines;
+        score += lines * 100;
+      }
+
+      currentPiece = getRandomPiece();
+
+      if (collide(currentPiece.x, currentPiece.y, currentPiece.shape)) {
+        stopTetrisGame();
+        appendOutput(`💀 <strong>TETRIS GAME OVER!</strong> Score: ${score} | Lines: ${linesCleared}`, "#ff5f56");
+        if (termInput) termInput.focus();
+      }
+    }
+
+    function renderBoard() {
+      let displayBoard = board.map(row => [...row]);
+
+      for (let r = 0; r < currentPiece.shape.length; r++) {
+        for (let c = 0; c < currentPiece.shape[r].length; c++) {
+          if (currentPiece.shape[r][c]) {
+            let py = currentPiece.y + r;
+            let px = currentPiece.x + c;
+            if (py >= 0 && py < rows && px >= 0 && px < cols) {
+              displayBoard[py][px] = currentPiece.block;
+            }
+          }
+        }
+      }
+
+      let gridStr = displayBoard.map(row => row.join("")).join("\n");
+      gameDiv.innerHTML = `<pre style="margin:0; font-size: 14px; line-height: 1.15; letter-spacing: 1px;">${gridStr}</pre><div style="color:#00ff88; font-size: 14px; margin-top: 8px; font-weight: bold;">Score: ${score} | Lines: ${linesCleared}</div>`;
+      termOutput.scrollTop = termOutput.scrollHeight;
+    }
+
+    tetrisInterval = setInterval(() => {
+      if (!collide(currentPiece.x, currentPiece.y + 1, currentPiece.shape)) {
+        currentPiece.y++;
+      } else {
+        lockPiece();
+      }
+      renderBoard();
+    }, 450);
+
+    // Global Key Listener for Tetris Controls
+    window.handleTetrisControls = function(e) {
+      if (activeGameMode !== "tetris") return;
+
+      const k = e.key.toLowerCase();
+      const gameKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "w", "a", "s", "d"];
+
+      if (gameKeys.includes(e.key) || gameKeys.includes(k)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if (k === "a" || e.key === "ArrowLeft") {
+        if (!collide(currentPiece.x - 1, currentPiece.y, currentPiece.shape)) {
+          currentPiece.x--;
+        }
+      } else if (k === "d" || e.key === "ArrowRight") {
+        if (!collide(currentPiece.x + 1, currentPiece.y, currentPiece.shape)) {
+          currentPiece.x++;
+        }
+      } else if (k === "s" || e.key === "ArrowDown") {
+        if (!collide(currentPiece.x, currentPiece.y + 1, currentPiece.shape)) {
+          currentPiece.y++;
+        }
+      } else if (k === "w" || e.key === "ArrowUp") {
+        let rotated = rotate(currentPiece.shape);
+        if (!collide(currentPiece.x, currentPiece.y, rotated)) {
+          currentPiece.shape = rotated;
+        }
+      } else if (k === "q") {
+        stopTetrisGame();
+        appendOutput("Tetris game exited.", "#ff5f56");
+        if (termInput) termInput.focus();
+        return;
+      }
+
+      renderBoard();
+    };
+
+    window.addEventListener("keydown", window.handleTetrisControls, true);
+  }
+
+  function stopTetrisGame() {
+    if (tetrisInterval) clearInterval(tetrisInterval);
+    tetrisInterval = null;
+    if (window.handleTetrisControls) {
+      window.removeEventListener("keydown", window.handleTetrisControls, true);
+      window.handleTetrisControls = null;
+    }
+    if (activeGameMode === "tetris") activeGameMode = null;
+  }
+
+  // --- TRIVIA QUIZ ---
+  function startQuizGame() {
+    activeGameMode = "quiz";
+    quizIndex = 0;
+    quizScore = 0;
+    appendOutput("<br>🎯 <strong>5-Question Engineering Quiz Started!</strong> Type A, B, or C into terminal and press Enter.", "var(--orange-yellow-crayola)");
+    renderCurrentQuestion();
+    if (termInput) termInput.focus();
+  }
+
+  function renderCurrentQuestion() {
+    if (quizIndex < quizQuestions.length) {
+      const qObj = quizQuestions[quizIndex];
+      let txt = `<strong>${qObj.q}</strong><br>`;
+      qObj.options.forEach(opt => { txt += `${opt}<br>`; });
+      appendOutput(txt, "#a9b7c6");
+    } else {
+      activeGameMode = null;
+      let badge = quizScore >= 40 ? " 🎖️ [Verified Portfolio Visitor Badge Unlocked!]" : "";
+      appendOutput(`✨ <strong>Quiz Complete!</strong> Final Score: ${quizScore}/50${badge}`, "var(--orange-yellow-crayola)");
+      if (termInput) termInput.focus();
+    }
+  }
+
+  function handleQuizInput(input) {
+    const ans = input.trim().toLowerCase();
+    if (!["a", "b", "c"].includes(ans)) {
+      appendOutput("Please enter 'a', 'b', or 'c'.", "#ff5f56");
+      return;
+    }
+
+    if (ans === quizQuestions[quizIndex].answer) {
+      quizScore += 10;
+      appendOutput("✅ Correct! (+10 pts)", "#00ff88");
+    } else {
+      appendOutput(`❌ Wrong! Correct answer was '${quizQuestions[quizIndex].answer.toUpperCase()}'.`, "#ff5f56");
+    }
+
+    quizIndex++;
+    renderCurrentQuestion();
+  }
+
+  // --- TIC-TAC-TOE ---
+  function startTicTacToeGame() {
+    activeGameMode = "tictactoe";
+    tttBoard = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    appendOutput("<br>❌⭕ <strong>Tic-Tac-Toe vs AI!</strong> You are 'X'. Enter position number (1-9) in the terminal and hit Enter.", "var(--orange-yellow-crayola)");
+    renderTicTacToeBoard();
+    if (termInput) termInput.focus();
+  }
+
+  function renderTicTacToeBoard() {
+    const b = tttBoard;
+    const boardTxt = `
+  ${b[0]} | ${b[1]} | ${b[2]}
+ ---+---+---
+  ${b[3]} | ${b[4]} | ${b[5]}
+ ---+---+---
+  ${b[6]} | ${b[7]} | ${b[8]}`;
+    appendOutput(`<pre style="margin:0; font-family:monospace; color:#00ff88;">${boardTxt}</pre>`);
+  }
+
+  function checkTTTWinner(board) {
+    const wins = [
+      [0,1,2], [3,4,5], [6,7,8],
+      [0,3,6], [1,4,7], [2,5,8],
+      [0,4,8], [2,4,6]
+    ];
+    for (let w of wins) {
+      if (board[w[0]] !== " " && board[w[0]] === board[w[1]] && board[w[1]] === board[w[2]]) {
+        return board[w[0]];
+      }
+    }
+    if (board.every(cell => cell === "X" || cell === "O")) return "Tie";
+    return null;
+  }
+
+  function handleTicTacToeInput(input) {
+    const pos = parseInt(input) - 1;
+    if (isNaN(pos) || pos < 0 || pos > 8 || tttBoard[pos] === "X" || tttBoard[pos] === "O") {
+      appendOutput("Invalid position. Type an available number between 1 and 9.", "#ff5f56");
+      return;
+    }
+
+    tttBoard[pos] = "X";
+    renderTicTacToeBoard();
+
+    let win = checkTTTWinner(tttBoard);
+    if (win) {
+      finishTTTGame(win);
+      return;
+    }
+
+    const emptyIndices = tttBoard.map((val, idx) => (val !== "X" && val !== "O") ? idx : null).filter(val => val !== null);
+    if (emptyIndices.length > 0) {
+      const aiMove = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+      tttBoard[aiMove] = "O";
+      appendOutput(`AI Bot played position ${aiMove + 1}:`, "#a9b7c6");
+      renderTicTacToeBoard();
+
+      win = checkTTTWinner(tttBoard);
+      if (win) {
+        finishTTTGame(win);
+      }
+    }
+  }
+
+  function finishTTTGame(winner) {
+    activeGameMode = null;
+    if (winner === "X") {
+      appendOutput("🎉 <strong>YOU WON!</strong> Great match!", "#00ff88");
+    } else if (winner === "O") {
+      appendOutput("🤖 <strong>AI BOT WON!</strong> Try again.", "#ff5f56");
+    } else {
+      appendOutput("🤝 <strong>IT'S A DRAW!</strong>", "var(--orange-yellow-crayola)");
+    }
+    if (termInput) termInput.focus();
+  }
+
+  // --- GLOBAL KEYBOARD SHORTCUTS ---
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && termModal && termModal.style.display === "flex") {
-      closeTerminalModal();
+    if (e.key === "Escape") {
+      stopMatrixRain();
+      if (activeGameMode === "snake") {
+        stopSnakeGame();
+        appendOutput("Snake game exited.", "#ff5f56");
+        if (termInput) termInput.focus();
+      } else if (activeGameMode === "tetris") {
+        stopTetrisGame();
+        appendOutput("Tetris game exited.", "#ff5f56");
+        if (termInput) termInput.focus();
+      } else if (termModal && termModal.style.display === "flex") {
+        closeTerminalModal();
+      }
     }
   });
 });

@@ -1061,8 +1061,8 @@
   </div>
 </div>
 <!-- Interactive Terminal Easter Egg Modal -->
-<div id="terminal-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 10, 12, 0.92); z-index: 20000; justify-content: center; align-items: center; backdrop-filter: blur(8px);">
-  
+<!-- Interactive Terminal Easter Egg Modal -->
+<div id="terminal-modal" tabindex="0" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 10, 12, 0.92); z-index: 20000; justify-content: center; align-items: center; backdrop-filter: blur(8px); outline: none;">  
   <div style="width: 90%; max-width: 850px; height: 520px; background: #0c0c0e; border: 1px solid var(--orange-yellow-crayola, #ffdb70); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.8); font-family: 'Courier New', Courier, monospace;">
     
     <!-- Terminal Header Bar -->
@@ -1093,6 +1093,9 @@ Type 'help' to view available commands or 'exit' to close shell.
   </div>
 
 </div>
-</body>
+<!-- Matrix Digital Rain Canvas Overlay -->
+  <canvas id="matrix-canvas" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 25000; pointer-events: none;"></canvas>
 
+  <script src="./assets/js/script.js"></script>
+</body>
 </html>
