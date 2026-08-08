@@ -854,7 +854,7 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
     }
   }
 
-  // --- RETRO SNAKE GAME ---
+// --- RETRO SNAKE GAME ---
   function startSnakeGame() {
     activeGameMode = "snake";
     stopSnakeGame();
@@ -876,10 +876,11 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
     gameDiv.style.cssText = "font-family: monospace; background: #000; padding: 14px; border: 1px solid #00ff88; border-radius: 8px; margin: 10px 0; text-align: center;";
     termOutput.appendChild(gameDiv);
 
-    const width = 28;
-    const height = 12;
-    let snake = [{ x: 10, y: 6 }, { x: 9, y: 6 }, { x: 8, y: 6 }];
-    let food = { x: 20, y: 6 };
+    // Expanded grid dimensions (More blocks)
+    const width = 36;
+    const height = 16;
+    let snake = [{ x: 15, y: 8 }, { x: 14, y: 8 }, { x: 13, y: 8 }];
+    let food = { x: 26, y: 8 };
     let dir = { x: 1, y: 0 };
     let score = 0;
 
@@ -897,14 +898,22 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
         }
         grid += "\n";
       }
-      gameDiv.innerHTML = `<pre style="margin:0; font-size: 15px; line-height: 1.2;">${grid}</pre><div style="color:#00ff88; font-size: 14px; margin-top: 8px; font-weight: bold;">Score: ${score} | WASD / Arrow Keys</div>`;
+      gameDiv.innerHTML = `<pre style="margin:0; font-size: 14px; line-height: 1.15; letter-spacing: 0.5px;">${grid}</pre><div style="color:#00ff88; font-size: 14px; margin-top: 8px; font-weight: bold;">Score: ${score} | WASD / Arrow Keys</div>`;
       termOutput.scrollTop = termOutput.scrollHeight;
     }
 
     snakeInterval = setInterval(() => {
-      const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+      // Screen wrapping logic (wraps left <-> right, top <-> bottom)
+      let rawX = snake[0].x + dir.x;
+      let rawY = snake[0].y + dir.y;
 
-      if (head.x < 0 || head.x >= width || head.y < 0 || head.y >= height || snake.some(s => s.x === head.x && s.y === head.y)) {
+      const head = {
+        x: (rawX + width) % width,
+        y: (rawY + height) % height
+      };
+
+      // Game Over on self-collision
+      if (snake.some(s => s.x === head.x && s.y === head.y)) {
         stopSnakeGame();
         appendOutput(`💀 <strong>GAME OVER!</strong> Final Score: ${score}`, "#ff5f56");
         return;
