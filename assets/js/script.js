@@ -612,20 +612,53 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-const cmdTriggerBtn = document.getElementById("cmd-trigger-btn");
-if (cmdTriggerBtn) {
-  cmdTriggerBtn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    openPalette();
-  });
-}
-
 /* Interactive Terminal CLI & Mini-Games Controller */
 document.addEventListener("DOMContentLoaded", function () {
   const termModal = document.getElementById("terminal-modal");
   const termInput = document.getElementById("terminal-input");
   const termOutput = document.getElementById("terminal-output");
   const termCloseDot = document.getElementById("term-close-dot");
+  const termCloseBtn = document.getElementById("term-close-btn");
+  const resizeHandle = document.getElementById("term-resize-handle");
+  const termCard = document.querySelector(".terminal-modal-card");
+
+  // --- DRAG-TO-RESIZE TERMINAL WINDOW ---
+  if (resizeHandle && termCard) {
+    let isResizing = false;
+    let startX, startY, startWidth, startHeight;
+
+    resizeHandle.addEventListener("mousedown", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      isResizing = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      startWidth = termCard.offsetWidth;
+      startHeight = termCard.offsetHeight;
+
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    });
+
+    function handleMouseMove(e) {
+      if (!isResizing) return;
+      const newWidth = Math.max(360, startWidth + (e.clientX - startX));
+      const newHeight = Math.max(280, startHeight + (e.clientY - startY));
+      
+      termCard.style.width = newWidth + "px";
+      termCard.style.height = newHeight + "px";
+      termCard.style.maxWidth = "95vw";
+      termCard.style.maxHeight = "95vh";
+    }
+
+    function handleMouseUp() {
+      isResizing = false;
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    }
+  }
+
+  // ... (rest of your script.js content below)
 
   let activeGameMode = null; // 'snake', 'tetris', 'quiz', 'tictactoe'
   let snakeInterval = null;
@@ -649,7 +682,10 @@ document.addEventListener("DOMContentLoaded", function () {
   window.openTerminalModal = function () {
     if (termModal) {
       termModal.style.display = "flex";
-      if (termInput) setTimeout(() => termInput.focus(), 50);
+      if (termInput) {
+        termInput.disabled = false;
+        setTimeout(() => termInput.focus(), 50);
+      }
     }
   };
 
@@ -661,6 +697,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (termCloseDot) termCloseDot.addEventListener("click", closeTerminalModal);
+  if (termCloseBtn) termCloseBtn.addEventListener("click", closeTerminalModal);
 
   function appendOutput(text, color = "#a9b7c6") {
     const div = document.createElement("div");
@@ -821,9 +858,16 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
   function startSnakeGame() {
     activeGameMode = "snake";
     stopSnakeGame();
+    activeGameMode = "snake";
 
-    if (termModal) termModal.focus();
-    if (termInput) termInput.blur();
+    if (termInput) {
+      termInput.disabled = true;
+      termInput.blur();
+    }
+
+    requestAnimationFrame(() => {
+      termModal?.focus({ preventScroll: true });
+    });
 
     appendOutput("<br>🐍 <strong>SNAKE GAME STARTED!</strong> Use <strong>WASD</strong> or <strong>Arrow Keys</strong>. Press 'q' to quit.", "var(--orange-yellow-crayola)");
 
@@ -863,7 +907,6 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
       if (head.x < 0 || head.x >= width || head.y < 0 || head.y >= height || snake.some(s => s.x === head.x && s.y === head.y)) {
         stopSnakeGame();
         appendOutput(`💀 <strong>GAME OVER!</strong> Final Score: ${score}`, "#ff5f56");
-        if (termInput) termInput.focus();
         return;
       }
 
@@ -899,30 +942,41 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
       if (k === "q") {
         stopSnakeGame();
         appendOutput("Snake game exited.", "#ff5f56");
-        if (termInput) termInput.focus();
       }
     };
 
-    window.addEventListener("keydown", window.handleSnakeControls, true);
+    document.addEventListener("keydown", window.handleSnakeControls, true);
   }
 
   function stopSnakeGame() {
     if (snakeInterval) clearInterval(snakeInterval);
     snakeInterval = null;
     if (window.handleSnakeControls) {
-      window.removeEventListener("keydown", window.handleSnakeControls, true);
+      document.removeEventListener("keydown", window.handleSnakeControls, true);
       window.handleSnakeControls = null;
     }
     if (activeGameMode === "snake") activeGameMode = null;
+
+    if (termInput) {
+      termInput.disabled = false;
+      termInput.focus();
+    }
   }
 
   // --- RETRO TETRIS GAME ---
   function startTetrisGame() {
     activeGameMode = "tetris";
     stopTetrisGame();
+    activeGameMode = "tetris";
 
-    if (termModal) termModal.focus();
-    if (termInput) termInput.blur();
+    if (termInput) {
+      termInput.disabled = true;
+      termInput.blur();
+    }
+
+    requestAnimationFrame(() => {
+      termModal?.focus({ preventScroll: true });
+    });
 
     appendOutput("<br>🧩 <strong>TETRIS STARTED!</strong> Controls: <strong>A/D</strong> or <strong>Left/Right</strong> (Move), <strong>W</strong> or <strong>Up</strong> (Rotate), <strong>S</strong> or <strong>Down</strong> (Drop). Press 'q' to quit.", "var(--orange-yellow-crayola)");
 
@@ -932,7 +986,7 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
     termOutput.appendChild(gameDiv);
 
     const cols = 10;
-    const rows = 14;
+    const rows = 16;
     let board = Array.from({ length: rows }, () => Array(cols).fill("▪️"));
     let score = 0;
     let linesCleared = 0;
@@ -1012,7 +1066,6 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
       if (collide(currentPiece.x, currentPiece.y, currentPiece.shape)) {
         stopTetrisGame();
         appendOutput(`💀 <strong>TETRIS GAME OVER!</strong> Score: ${score} | Lines: ${linesCleared}`, "#ff5f56");
-        if (termInput) termInput.focus();
       }
     }
 
@@ -1032,7 +1085,7 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
       }
 
       let gridStr = displayBoard.map(row => row.join("")).join("\n");
-      gameDiv.innerHTML = `<pre style="margin:0; font-size: 14px; line-height: 1.15; letter-spacing: 1px;">${gridStr}</pre><div style="color:#00ff88; font-size: 14px; margin-top: 8px; font-weight: bold;">Score: ${score} | Lines: ${linesCleared}</div>`;
+      gameDiv.innerHTML = `<pre style="margin:0; font-size: 18px; line-height: 1.15; letter-spacing: 1.5px;">${gridStr}</pre><div style="color:#00ff88; font-size: 15px; margin-top: 8px; font-weight: bold;">Score: ${score} | Lines: ${linesCleared}</div>`;
       termOutput.scrollTop = termOutput.scrollHeight;
     }
 
@@ -1077,24 +1130,28 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
       } else if (k === "q") {
         stopTetrisGame();
         appendOutput("Tetris game exited.", "#ff5f56");
-        if (termInput) termInput.focus();
         return;
       }
 
       renderBoard();
     };
 
-    window.addEventListener("keydown", window.handleTetrisControls, true);
+    document.addEventListener("keydown", window.handleTetrisControls, true);
   }
 
   function stopTetrisGame() {
     if (tetrisInterval) clearInterval(tetrisInterval);
     tetrisInterval = null;
     if (window.handleTetrisControls) {
-      window.removeEventListener("keydown", window.handleTetrisControls, true);
+      document.removeEventListener("keydown", window.handleTetrisControls, true);
       window.handleTetrisControls = null;
     }
     if (activeGameMode === "tetris") activeGameMode = null;
+
+    if (termInput) {
+      termInput.disabled = false;
+      termInput.focus();
+    }
   }
 
   // --- TRIVIA QUIZ ---
@@ -1223,11 +1280,9 @@ Focus: AI Agents, Wavelet Biometrics, Signal Processing, Full-Stack Architecture
       if (activeGameMode === "snake") {
         stopSnakeGame();
         appendOutput("Snake game exited.", "#ff5f56");
-        if (termInput) termInput.focus();
       } else if (activeGameMode === "tetris") {
         stopTetrisGame();
         appendOutput("Tetris game exited.", "#ff5f56");
-        if (termInput) termInput.focus();
       } else if (termModal && termModal.style.display === "flex") {
         closeTerminalModal();
       }

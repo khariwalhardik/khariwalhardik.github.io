@@ -1061,19 +1061,18 @@
   </div>
 </div>
 <!-- Interactive Terminal Easter Egg Modal -->
-<!-- Interactive Terminal Easter Egg Modal -->
 <div id="terminal-modal" tabindex="0" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 10, 12, 0.92); z-index: 20000; justify-content: center; align-items: center; backdrop-filter: blur(8px); outline: none;">  
-  <div style="width: 90%; max-width: 850px; height: 520px; background: #0c0c0e; border: 1px solid var(--orange-yellow-crayola, #ffdb70); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.8); font-family: 'Courier New', Courier, monospace;">
+  <div class="terminal-modal-card" style="position: relative; width: 85vw; max-width: 900px; height: 75vh; max-height: 650px; min-width: 360px; min-height: 300px; background: #0c0c0e; border: 1px solid var(--orange-yellow-crayola, #ffdb70); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.8); font-family: 'Courier New', Courier, monospace;">
     
     <!-- Terminal Header Bar -->
-    <div style="background: #18181c; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #28282e;">
-      <div style="display: flex; gap: 8px;">
-        <span id="term-close-dot" style="width: 12px; height: 12px; background: #ff5f56; border-radius: 50%; cursor: pointer;"></span>
-        <span style="width: 12px; height: 12px; background: #ffbd2e; border-radius: 50%;"></span>
-        <span style="width: 12px; height: 12px; background: #27c93f; border-radius: 50%;"></span>
+    <div class="terminal-header" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #1e1e1e; border-bottom: 1px solid #28282e;">
+      <div class="terminal-dots" style="display: flex; gap: 8px; align-items: center;">
+        <span id="term-close-dot" title="Close Terminal" style="width: 12px; height: 12px; background: #ff5f56; border-radius: 50%; display: inline-block; cursor: pointer;"></span>
+        <span style="width: 12px; height: 12px; background: #ffbd2e; border-radius: 50%; display: inline-block;"></span>
+        <span style="width: 12px; height: 12px; background: #27c93f; border-radius: 50%; display: inline-block;"></span>
       </div>
-      <span style="font-size: 12px; color: #a0a0a0; font-weight: bold;">hkhariwal@iitb-dev:~ (zsh)</span>
-      <span style="font-size: 11px; color: #666;">Type 'help' or 'exit'</span>
+      <span class="terminal-title" style="font-size: 12px; color: #888; font-family: monospace;">hkhariwal@iitb-dev:~ (zsh)</span>
+      <button id="term-close-btn" class="term-close-btn" title="Close" style="background: transparent; border: none; color: #888; font-size: 16px; cursor: pointer; line-height: 1;">✕</button>
     </div>
 
     <!-- Terminal Output Area -->
@@ -1090,9 +1089,12 @@ Type 'help' to view available commands or 'exit' to close shell.
       <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" style="flex: 1; background: transparent; border: none; outline: none; color: #ffffff; font-family: monospace; font-size: 13px;">
     </div>
 
-  </div>
+    <!-- Custom Drag-to-Resize Handle -->
+    <div id="term-resize-handle" title="Drag to Resize" style="position: absolute; right: 0; bottom: 0; width: 18px; height: 18px; cursor: se-resize; background: linear-gradient(135deg, transparent 50%, var(--orange-yellow-crayola, #ffdb70) 50%); border-bottom-right-radius: 11px; z-index: 30;"></div>
 
+  </div>
 </div>
+
 <!-- Matrix Digital Rain Canvas Overlay -->
   <canvas id="matrix-canvas" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 25000; pointer-events: none;"></canvas>
 

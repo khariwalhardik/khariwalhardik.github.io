@@ -2092,3 +2092,31 @@ body:hover #cursor-blur {
   align-items: center;
   justify-content: center;
 }
+
+/* Terminal Modal Box Base Styling */
+.terminal-modal-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#terminal-output {
+  flex: 1;
+  overflow-y: auto;
+}
+
+#term-close-dot, .term-close-btn {
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+#term-close-dot:hover, .term-close-btn:hover {
+  opacity: 0.8;
+  transform: scale(1.15);
+}
+
+/* Hover style for the resize handle */
+#term-resize-handle:hover {
+  filter: brightness(1.2);
+}
